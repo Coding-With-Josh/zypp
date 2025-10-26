@@ -23,7 +23,8 @@
         "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs access to your location to provide location-based features.",
         "NSContactsUsageDescription": "This app needs access to your contacts to help you connect with friends.",
         "NSUserTrackingUsageDescription": "This app needs permission to track your activity across other apps and websites."
-      }
+      },
+      "bundleIdentifier": "com.anonymous.exponativewindtemplate"
     },
     "android": {
       "adaptiveIcon": {
@@ -74,7 +75,10 @@
       "typedRoutes": true
     },
     "extra": {
-      "router": {}
+      "router": {},
+      "eas": {
+        "projectId": "aa64f18e-0968-463a-8954-475ff8f708aa"
+      }
     }
   }
 }

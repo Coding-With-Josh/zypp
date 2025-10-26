@@ -21,7 +21,10 @@ const MAPPING = {
   "paperplane.fill": "send",
   "chevron.left.forwardslash.chevron.right": "code",
   "chevron.right": "chevron-right",
+  "arrow.up.right": "arrow-outward",
   menucard: "menu",
+  "checkmark": "check",
+  "delete.left": "backspace",
   "checkmark.shield.fill": "verified-user",
 } as IconMapping;
 

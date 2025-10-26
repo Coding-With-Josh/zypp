@@ -18,16 +18,16 @@ const Input = React.forwardRef<
     <TextInput
       ref={ref}
       className={cn(
-        "native:h-12 h-10 w-full rounded-md border-2 border-input bg-background px-3 text-base text-foreground placeholder:text-muted-foreground",
-        "web:flex web:py-2 web:ring-offset-background file:border-0 file:bg-transparent file:font-medium",
+        "native:h-16 h-14 w-full rounded-full border-2 border-input bg-primary px-3 text-base text-foreground placeholder:text-muted-foreground",
+        "web:flex web:py-2 web:ring-offset-background file:border-0 font-sans file:bg-transparent file:font-medium",
         "web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2",
-        "focus:border-primary",
+        "focus:border-primary/40",
         props.editable === false && "opacity-50 web:cursor-not-allowed",
         className
       )}
       placeholderClassName={cn("text-muted-foreground", placeholderClassName)}
       placeholderTextColor="#9ca3af"
-      selectionColor="#6366f1"
+      selectionColor="#006534"
       underlineColorAndroid="transparent"
       style={[androidStyles, style]}
       {...props}

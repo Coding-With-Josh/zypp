@@ -38,29 +38,29 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="menu-demo"
+        name="send"
         options={{
-          title: "Menu",
+          title: "Send",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="menucard" color={color} />
+            <IconSymbol size={22} name="arrow.up.backward.bottomtrailing.rectangle.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="permissions-demo"
+        name="receive"
         options={{
-          title: "Permissions",
+          title: "Receive",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="checkmark.shield.fill" color={color} />
+            <IconSymbol size={22} name="arrow.down.forward.topleading.rectangle.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="error-demo"
+        name="me"
         options={{
-          title: "Errors",
+          title: "Me",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="exclamationmark.triangle.fill" color={color} />
+            <IconSymbol size={22} name="person" color={color} />
           ),
         }}
       />

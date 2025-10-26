@@ -4,6 +4,16 @@ module.exports = {
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
+       fontFamily: {
+        'sans': ['InstrumentSans_400Regular', 'sans-serif'],
+        'medium': ['InstrumentSans_500Medium', 'sans-serif'],
+        'semibold': ['InstrumentSans_600SemiBold', 'sans-serif'],
+        'bold': ['InstrumentSans_700Bold', 'sans-serif'],
+        'italic': ['InstrumentSans_400Regular_Italic', 'sans-serif'],
+        'medium-italic': ['InstrumentSans_500Medium_Italic', 'sans-serif'],
+        'semibold-italic': ['InstrumentSans_600SemiBold_Italic', 'sans-serif'],
+        'bold-italic': ['InstrumentSans_700Bold_Italic', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

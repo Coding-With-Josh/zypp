@@ -30,27 +30,27 @@ import { TextClassContext } from "./utils/text-context";
  */
 
 const buttonVariants = cva(
-  "web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 group flex items-center justify-center rounded-md",
+  "web:ring-offset-background web:transition-colors rounded-full flex flex-row items-center justify-center gap-1 web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2 group flex items-center justify-center rounded-md",
   {
     variants: {
       variant: {
         default:
-          "web:hover:opacity-90 bg-primary active:opacity-90",
+          "web:hover:opacity-90 bg-primary active:opacity-90 rounded-full",
         destructive:
-          "web:hover:opacity-90 bg-destructive active:opacity-90",
+          "web:hover:opacity-90 bg-destructive active:opacity-90 rounded-full",
         outline:
-          "web:hover:bg-accent web:hover:text-accent-foreground border border-input bg-background",
+          "web:hover:bg-accent web:hover:text-accent-foreground border rounded-full border-input bg-background",
         secondary:
-          "web:hover:opacity-80 bg-secondary active:opacity-80",
+          "web:hover:opacity-80 bg-secondary active:opacity-80 rounded-full",
         ghost:
-          "web:hover:bg-accent web:hover:text-accent-foreground",
-        link: "web:underline-offset-4 web:hover:underline web:focus:underline",
+          "web:hover:bg-accent web:hover:text-accent-foreground rounded-full",
+        link: "web:underline-offset-4 web:hover:underline web:focus:underline rounded-full",
       },
       size: {
-        default: "native:h-12 native:px-5 native:py-3 h-10 px-4 py-2",
-        sm: "native:h-10 native:px-4 native:py-2 h-9 rounded-md px-3",
-        lg: "native:h-14 native:px-8 native:py-4 h-11 rounded-md px-8",
-        icon: "native:h-12 native:w-12 h-10 w-10",
+        default: "native:h-12 native:px-5 native:py-3 h-10 px-4 py-2 rounded-full",
+        sm: "native:h-10 native:px-4 native:py-2 h-9 rounded-full px-3",
+        lg: "native:h-14 native:px-8 native:py-4 h-11 rounded-full px-8",
+        icon: "native:h-12 native:w-12 h-10 w-10 rounded-full",
       },
     },
     defaultVariants: {
@@ -73,7 +73,7 @@ const buttonTextVariants = cva("web:transition-colors text-sm font-medium", {
     size: {
       default: "",
       sm: "",
-      lg: "native:text-base",
+      lg: "",
       icon: "",
     },
   },
@@ -97,7 +97,7 @@ const Button = React.forwardRef<
   const androidRipple = Platform.select({
     android: {
       android_ripple: {
-        color: variant === "destructive" ? "rgba(239, 68, 68, 0.3)" : "rgba(99, 102, 241, 0.3)",
+        color: variant === "destructive" ? "rgba(159, 32, 0, 30)" : "rgba(0, 159, 83, 30)",
         borderless: false,
       },
     },
@@ -113,7 +113,7 @@ const Button = React.forwardRef<
     >
       <Pressable
         className={cn(
-          props.disabled && "opacity-50 web:pointer-events-none",
+          props.disabled && "opacity-50 web:pointer-events-none rounded-full",
           buttonVariants({ variant, size, className })
         )}
         ref={ref}
