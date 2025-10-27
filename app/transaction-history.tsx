@@ -279,9 +279,7 @@ export default function TransactionHistory() {
                         }`}
                         activeOpacity={0.7}
                         onPress={() =>
-                          router.push(
-                            `/transaction-details?id=${transaction}`
-                          )
+                          router.push(`/transaction-details?id=${transaction}`)
                         }
                       >
                         {/* Left Side - Icon and Main Info */}

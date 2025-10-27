@@ -14,7 +14,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-        tabBar={props=> <TabBar {...props} />}
+      tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
@@ -44,7 +44,11 @@ export default function TabLayout() {
         options={{
           title: "Send",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="arrow.up.backward.bottomtrailing.rectangle.fill" color={color} />
+            <IconSymbol
+              size={22}
+              name="arrow.up.backward.bottomtrailing.rectangle.fill"
+              color={color}
+            />
           ),
         }}
       />
@@ -53,7 +57,11 @@ export default function TabLayout() {
         options={{
           title: "Receive",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={22} name="arrow.down.forward.topleading.rectangle.fill" color={color} />
+            <IconSymbol
+              size={22}
+              name="arrow.down.forward.topleading.rectangle.fill"
+              color={color}
+            />
           ),
         }}
       />

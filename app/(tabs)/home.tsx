@@ -141,14 +141,14 @@ export default function Home() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="flex-row items-center gap-3 px-4 h-14 rounded-full bg-white/5"
+              className="flex-row items-center gap-3 px-2 pr-3 h-14 rounded-full bg-white/5"
               accessibilityLabel="User profile"
               activeOpacity={0.8}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <Image
                 source={require("@/assets/images/design/user.png")}
-                className="w-8 h-8 rounded-full"
+                className="w-10 h-10 rounded-full"
               />
               <Text className="text-white font-semibold text-base">
                 josh_scriptz
@@ -186,7 +186,7 @@ export default function Home() {
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 0.21)",
                   borderWidth: 1,
-                  borderColor: "rgba(255, 255, 255, 0.19)",
+                  borderColor: "rgba(255, 255, 255, 0.15)",
                 }}
               >
                 <Image
@@ -201,7 +201,7 @@ export default function Home() {
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 0.21)",
                   borderWidth: 1,
-                  borderColor: "rgba(255, 255, 255, 0.19)",
+                  borderColor: "rgba(255, 255, 255, 0.15)",
                 }}
               >
                 <Image
@@ -226,10 +226,11 @@ export default function Home() {
                 className="rounded-full p-6 items-center"
                 activeOpacity={0.7}
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  backgroundColor: "rgba(0, 15, 0, 0.4)",
                   borderWidth: 1,
                   borderColor: "rgba(151, 151, 151, 0.34)",
                 }}
+                onPress={() => router.push("/receive")}
               >
                 <Image
                   source={require("@/assets/images/icons/receive-icon.png")}
@@ -242,6 +243,7 @@ export default function Home() {
               <TouchableOpacity
                 className="rounded-full bg-primary p-7 items-center border"
                 activeOpacity={0.7}
+                onPress={() => router.push("/add-cash")}
               >
                 <Image
                   source={require("@/assets/images/icons/add-icon.png")}
@@ -252,13 +254,14 @@ export default function Home() {
             </View>
             <View className="flex-1 mx-2 items-center">
               <TouchableOpacity
-                className="rounded-full bg-green-600 p-6 items-center border border-green-700"
+                className="rounded-full p-6 items-center"
                 activeOpacity={0.7}
                 style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.4)",
+                  backgroundColor: "rgba(0, 15, 0, 0.4)",
                   borderWidth: 1,
                   borderColor: "rgba(151, 151, 151, 0.34)",
                 }}
+                onPress={() => router.push("/send")}
               >
                 <Image
                   source={require("@/assets/images/icons/send-icon.png")}
