@@ -36,7 +36,7 @@ const SetUsername: React.FC = () => {
 
     const handleContinue = () => {
         animateButton()
-        router.replace('/set-pin')
+        router.replace('/connect-wallet')
     }
 
     return (

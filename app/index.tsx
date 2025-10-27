@@ -7,7 +7,7 @@ const Index = () => {
     useEffect(() => {
         // This will run when the component mounts
         setTimeout(() => {
-            router.replace('/onboarding');
+            router.replace('/home');
         }, 2000);
     }, []);
   return (

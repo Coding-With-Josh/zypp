@@ -1,11 +1,13 @@
-import { Text, View } from '@/components/ui'
+import { KeyboardAvoidingView, SafeAreaView, Text, View } from '@/components/ui'
 import React from 'react'
 
 const Receive = () => {
   return (
-    <View>
-        <Text>Receive - Accept crypto</Text>
-    </View>
+        <SafeAreaView edges={["top"]} className="flex-1 bg-black">
+      <KeyboardAvoidingView className="flex-1">
+        
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
