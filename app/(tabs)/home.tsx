@@ -1,11 +1,12 @@
+import { QRScannerModal } from "@/components/blocks/modals/qr-scanner-modal";
 import { SafeAreaView, Text } from "@/components/ui";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function Home() {
-  const [sheetOpen, setSheetOpen] = React.useState(false);
+  const [showQRScannerModal, setShowQRScannerModal] = useState(false);
 
   // Sample transaction data with Zypp states
   const recentTransactions = [
@@ -132,12 +133,12 @@ export default function Home() {
         <View className="w-full px-5 pt-4 pb-4 bg-transparent">
           <View className="flex-row items-center justify-between">
             <TouchableOpacity
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              accessibilityLabel="Scan QR code"
+              className="w-12 h-12 rounded-full items-center justify-center"
+              accessibilityLabel="Search"
               activeOpacity={0.8}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
-              <Ionicons name="scan-outline" size={22} color="white" />
+              <Ionicons name="search-outline" size={22} color="white" />
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -157,12 +158,13 @@ export default function Home() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="w-12 h-12 rounded-full items-center justify-center"
-              accessibilityLabel="Search"
+              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              accessibilityLabel="Scan QR code"
               activeOpacity={0.8}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+              onPress={()=> setShowQRScannerModal(true)}
             >
-              <Ionicons name="search-outline" size={22} color="white" />
+              <Ionicons name="scan-outline" size={22} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -400,6 +402,10 @@ export default function Home() {
             )}
           </View>
         </ScrollView>
+        <QRScannerModal
+          visible={showQRScannerModal}
+          onClose={() => setShowQRScannerModal(false)}
+        />
       </SafeAreaView>
     </View>
   );

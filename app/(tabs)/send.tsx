@@ -1,3 +1,6 @@
+// screens/SendScreen.tsx
+import { QRScannerModal } from "@/components/blocks/modals/qr-scanner-modal";
+import { UserListModal } from "@/components/blocks/modals/user-list-modal";
 import { cn, Input, SafeAreaView, Text } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useNetworkConnection } from "@/hooks/useNetworkConnection";
@@ -8,7 +11,6 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  Modal,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -29,8 +31,9 @@ export default function SendScreen() {
   const [selectedToken, setSelectedToken] = useState("SOL");
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState("Ready to send");
-  const [showScanModal, setShowScanModal] = useState(false);
-  const [isScanning, setIsScanning] = useState(false);
+  const [showUserListModal, setShowUserListModal] = useState(false);
+  const [showQRScannerModal, setShowQRScannerModal] = useState(false);
+  const [isScanningUsers, setIsScanningUsers] = useState(false);
   const [selectedUser, setSelectedUser] = useState<ZyppUser | null>(null);
 
   const { isConnected, isInternetReachable, type, checkConnection } =
@@ -106,7 +109,7 @@ export default function SendScreen() {
   const handleUserSelect = (user: ZyppUser) => {
     setSelectedUser(user);
     setRecipient(user.username);
-    setShowScanModal(false);
+    setShowUserListModal(false);
   };
 
   const handleSend = () => {
@@ -149,13 +152,24 @@ export default function SendScreen() {
     }, 2000);
   };
 
-  const handleScanForUsers = () => {
-    setShowScanModal(true);
-    setIsScanning(true);
+  const handleFindMoreUsers = () => {
+    setShowUserListModal(true);
+    setIsScanningUsers(true);
 
     // Simulate scanning for users
     setTimeout(() => {
-      setIsScanning(false);
+      setIsScanningUsers(false);
+    }, 3000);
+  };
+
+  const handleScanQRCode = () => {
+    setShowQRScannerModal(true);
+  };
+
+  const handleScanAgain = () => {
+    setIsScanningUsers(true);
+    setTimeout(() => {
+      setIsScanningUsers(false);
     }, 3000);
   };
 
@@ -172,106 +186,6 @@ export default function SendScreen() {
   };
 
   const connectionStatus = getConnectionStatus();
-
-  const ScanModal = () => (
-    <Modal
-      visible={showScanModal}
-      animationType="slide"
-      presentationStyle="pageSheet"
-    >
-      <View className="flex-1 bg-black">
-        <SafeAreaView className="flex-1 bg-transparent">
-          {/* Header */}
-          <View className="w-full px-5 pt-4 pb-4 border-b border-white/10">
-            <View className="flex-row items-center justify-between">
-              <TouchableOpacity
-                onPress={() => setShowScanModal(false)}
-                className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              >
-                <Ionicons name="close" size={24} color="white" />
-              </TouchableOpacity>
-
-              <Text className="text-white font-semibold text-xl">
-                Find Users
-              </Text>
-
-              <View className="w-12 h-12" />
-            </View>
-          </View>
-
-          <View className="flex-1 px-6 pt-6">
-            {isScanning ? (
-              <View className="flex-1 items-center justify-center">
-                <View className="w-48 h-48 bg-white/5 rounded-3xl items-center justify-center border-2 border-dashed border-primary/50 mb-6">
-                  <ActivityIndicator size="large" color="#22C55E" />
-                </View>
-                <Text className="text-white font-semibold text-xl mb-2 text-center">
-                  Scanning for Users...
-                </Text>
-                <Text className="text-white/60 text-center text-base">
-                  Looking for nearby Zypp users to connect with
-                </Text>
-              </View>
-            ) : (
-              <View className="flex-1">
-                <Text className="text-white font-semibold text-xl mb-6 text-center">
-                  Available Zypp Users
-                </Text>
-
-                <ScrollView
-                  showsVerticalScrollIndicator={false}
-                  className="flex-1"
-                >
-                  <View className="gap-3 pb-6">
-                    {zyppUsers.map((user) => (
-                      <TouchableOpacity
-                        key={user.id}
-                        onPress={() => handleUserSelect(user)}
-                        className="flex-row items-center bg-white/5 rounded-2xl p-4 border border-white/10 active:bg-white/10"
-                      >
-                        <Image
-                          source={user.avatar}
-                          className="w-12 h-12 rounded-xl"
-                        />
-                        <View className="flex-1 ml-3">
-                          <Text className="text-white font-semibold text-base">
-                            {user.displayName}
-                          </Text>
-                          <Text className="text-white/60 text-sm">
-                            @{user.username}
-                          </Text>
-                        </View>
-                        <View className="flex-row items-center gap-2">
-                          <View
-                            className={`w-2 h-2 rounded-full ${
-                              user.isOnline ? "bg-green-400" : "bg-gray-400"
-                            }`}
-                          />
-                          <Text className="text-white/60 text-xs">
-                            {user.isOnline ? "Online" : "Offline"}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </ScrollView>
-
-                <TouchableOpacity
-                  onPress={() => setIsScanning(true)}
-                  className="flex-row items-center justify-center gap-2 bg-primary py-4 rounded-full mb-6 active:bg-primary/90"
-                >
-                  <Ionicons name="refresh" size={20} color="#081405" />
-                  <Text className="text-primary-foreground font-semibold text-lg">
-                    Scan Again
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
-        </SafeAreaView>
-      </View>
-    </Modal>
-  );
 
   return (
     <View className="flex-1 bg-black">
@@ -298,7 +212,7 @@ export default function SendScreen() {
             <Text className="text-white font-semibold text-xl">Send</Text>
 
             <TouchableOpacity
-              onPress={handleScanForUsers}
+              onPress={handleScanQRCode}
               className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
@@ -428,7 +342,7 @@ export default function SendScreen() {
 
           {/* Recipient Selection */}
           <View className="px-6 mb-6">
-            <Text className="text-white font-medium text-lg mb-4">
+            <Text className="text-white font-semibold text-lg mb-4">
               Send To Zypp User
             </Text>
 
@@ -521,7 +435,7 @@ export default function SendScreen() {
 
                 <TouchableOpacity
                   className="items-center"
-                  onPress={handleScanForUsers}
+                  onPress={handleFindMoreUsers}
                 >
                   <View className="w-16 h-16 rounded-2xl border-2 border-dashed border-white/20 items-center justify-center">
                     <IconSymbol name="plus" size={20} color="#9CA3AF" />
@@ -593,8 +507,22 @@ export default function SendScreen() {
           </View>
         </ScrollView>
 
-        {/* Scan Modal */}
-        <ScanModal />
+        {/* User List Modal */}
+        <UserListModal
+          visible={showUserListModal}
+          onClose={() => setShowUserListModal(false)}
+          onUserSelect={handleUserSelect}
+          isScanning={isScanningUsers}
+          onScanAgain={handleScanAgain}
+          users={zyppUsers}
+        />
+
+        {/* QR Scanner Modal */}
+        <QRScannerModal
+          visible={showQRScannerModal}
+          onClose={() => setShowQRScannerModal(false)}
+          onUserSelect={handleUserSelect}
+        />
       </SafeAreaView>
     </View>
   );

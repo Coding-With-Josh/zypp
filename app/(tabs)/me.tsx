@@ -37,7 +37,7 @@ export default function MeScreen() {
       title: "Preferences",
       items: [
         {
-          icon: "bell",
+          icon: "notifications-outline",
           title: "Notifications",
           subtitle: "Push notifications and alerts",
           type: "toggle",
@@ -45,7 +45,7 @@ export default function MeScreen() {
           onToggle: setNotificationsEnabled,
         },
         {
-          icon: "key",
+          icon: "finger-print",
           title: "Biometric Login",
           subtitle: "Use Face ID or Touch ID",
           type: "toggle",
@@ -119,7 +119,7 @@ export default function MeScreen() {
         {/* Header */}
         <View className="w-full px-5 pt-4 pb-6">
           <View className="flex-row items-center justify-between">
-            <Text className="text-white font-semibold text-3xl">Profile</Text>
+            <Text className="text-black font-semibold text-3xl">Profile</Text>
             <TouchableOpacity
               className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
@@ -139,7 +139,7 @@ export default function MeScreen() {
             <View className="flex-row items-center gap-4 mb-6">
               <Image
                 source={require("@/assets/images/design/user.png")}
-                className="w-20 h-20 rounded-full border-2 border-primary"
+                className="w-20 h-20 rounded-2xl border-2 border-primary"
               />
               <View className="flex-1">
                 <Text className="text-white font-semibold text-2xl mb-1">
