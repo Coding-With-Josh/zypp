@@ -142,7 +142,7 @@ export default function Home() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="flex-row items-center gap-3 px-2 pr-3 h-14 rounded-full bg-white/5"
+              className="flex-row items-center gap-3 px-2 pr-3 h-14 rounded-full bg-black/15"
               accessibilityLabel="User profile"
               activeOpacity={0.8}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
@@ -158,11 +158,11 @@ export default function Home() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               accessibilityLabel="Scan QR code"
               activeOpacity={0.8}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-              onPress={()=> setShowQRScannerModal(true)}
+              onPress={() => setShowQRScannerModal(true)}
             >
               <Ionicons name="scan-outline" size={22} color="white" />
             </TouchableOpacity>
@@ -183,7 +183,7 @@ export default function Home() {
             <Text className="text-white text-5xl font-semibold">2 SOL</Text>
             <View className="flex-row items-center mt-5 gap-2">
               <TouchableOpacity
-                className="flex-row items-center gap-2 px-4 h-10 rounded-full bg-white/5"
+                className="flex-row items-center gap-2 px-4 h-10 rounded-full bg-black/15"
                 activeOpacity={0.8}
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 0.21)",
@@ -198,7 +198,7 @@ export default function Home() {
                 <Text className="text-white font-semibold text-base">USDC</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="flex-row items-center gap-2 px-4 h-10 rounded-full bg-white/5"
+                className="flex-row items-center gap-2 px-4 h-10 rounded-full bg-black/15"
                 activeOpacity={0.8}
                 style={{
                   backgroundColor: "rgba(0, 0, 0, 0.21)",
@@ -291,7 +291,7 @@ export default function Home() {
             </View>
 
             {/* Transactions List */}
-            <View className="bg-white/5 rounded-3xl border border-white/10 overflow-hidden">
+            <View className="bg-black/15 rounded-3xl border border-white/10 overflow-hidden">
               {recentTransactions.map((transaction, index) => {
                 const statusInfo = getStatusIcon(transaction.status);
                 const txIcon = getTransactionIcon(
@@ -390,7 +390,7 @@ export default function Home() {
 
             {/* Empty State (if no transactions) */}
             {recentTransactions.length === 0 && (
-              <View className="bg-white/5 rounded-3xl border border-white/10 p-8 items-center justify-center">
+              <View className="bg-black/15 rounded-3xl border border-white/10 p-8 items-center justify-center">
                 <Ionicons name="card-outline" size={48} color="#9CA3AF" />
                 <Text className="text-white font-semibold text-lg mt-4">
                   No transactions yet

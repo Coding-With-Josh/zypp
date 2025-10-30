@@ -1,4 +1,4 @@
-// screens/SendScreen.tsx
+// SendScreen.tsx
 import { QRScannerModal } from "@/components/blocks/modals/qr-scanner-modal";
 import { UserListModal } from "@/components/blocks/modals/user-list-modal";
 import { cn, Input, SafeAreaView, Text } from "@/components/ui";
@@ -11,6 +11,8 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -188,342 +190,355 @@ export default function SendScreen() {
   const connectionStatus = getConnectionStatus();
 
   return (
-    <View className="flex-1 bg-black">
-      {/* Gradient Background */}
-      <Image
-        source={require("@/assets/images/design/top-gradient.png")}
-        className="absolute top-0 left-0 right-0 w-full"
-        style={{ height: 400 }}
-        resizeMode="cover"
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="flex-1 bg-black"
+    >
+      <View className="flex-1 bg-black">
+        {/* Gradient Background */}
+        <Image
+          source={require("@/assets/images/design/top-gradient.png")}
+          className="absolute top-0 left-0 right-0 w-full"
+          style={{ height: 400 }}
+          resizeMode="cover"
+        />
 
-      <SafeAreaView className="flex-1 bg-transparent">
-        {/* Header */}
-        <View className="w-full px-6 pt-4 pb-4">
-          <View className="flex-row items-center justify-between">
-            <TouchableOpacity
-              onPress={() => router.back()}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-            >
-              <Ionicons name="chevron-back" size={24} color="white" />
-            </TouchableOpacity>
+        <SafeAreaView className="flex-1 bg-transparent">
+          {/* Header */}
+          <View className="w-full px-6 pt-4 pb-4">
+            <View className="flex-row items-center justify-between">
+              <TouchableOpacity
+                onPress={() => router.back()}
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+              >
+                <Ionicons name="chevron-back" size={24} color="white" />
+              </TouchableOpacity>
 
-            <Text className="text-white font-semibold text-xl">Send</Text>
+              <Text className="text-white font-semibold text-xl">Send</Text>
 
-            <TouchableOpacity
-              onPress={handleScanQRCode}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-            >
-              <Ionicons name="scan-outline" size={22} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <ScrollView
-          className="flex-1"
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }}
-        >
-          {/* Network Status */}
-          <View className="px-6 mb-8">
-            <TouchableOpacity
-              onPress={checkConnection}
-              className="flex-row items-center justify-between bg-black/40 rounded-2xl p-4 border border-white/10"
-            >
-              <View className="flex-row items-center gap-3">
-                <Ionicons
-                  name={connectionStatus.icon as any}
-                  size={20}
-                  color={connectionStatus.color}
-                />
-                <View>
-                  <Text className="text-white font-medium text-base">
-                    {connectionStatus.text}
-                  </Text>
-                  <Text className="text-white/60 text-xs">
-                    Connection Type: {type || "Unknown"}
-                  </Text>
-                </View>
-              </View>
-              <Ionicons name="refresh" size={18} color="#9CA3AF" />
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleScanQRCode}
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+              >
+                <Ionicons name="scan-outline" size={22} color="white" />
+              </TouchableOpacity>
+            </View>
           </View>
 
-          {/* Currency Selection */}
-          <View className="px-6 mb-6">
-            <Text className="text-white font-semibold text-lg mb-4">
-              Currency
-            </Text>
-            <View className="flex-row gap-3">
-              {tokens.map((token) => (
-                <TouchableOpacity
-                  key={token.symbol}
-                  onPress={() => setSelectedToken(token.symbol)}
-                  className={`flex-row items-center gap-2 px-4 py-3 rounded-full border ${
-                    selectedToken === token.symbol
-                      ? "bg-primary/10 border-primary/90"
-                      : "bg-white/5 border-white/10"
-                  }`}
-                >
-                  <Image
-                    source={token.icon}
-                    className="w-5 h-5"
-                    resizeMode="contain"
+          <ScrollView
+            className="flex-1"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 100 }}
+          >
+            {/* Network Status */}
+            <View className="px-6 mb-8">
+              <TouchableOpacity
+                onPress={checkConnection}
+                className="flex-row items-center justify-between bg-black/40 rounded-2xl p-4 border border-white/10"
+              >
+                <View className="flex-row items-center gap-3">
+                  <Ionicons
+                    name={connectionStatus.icon as any}
+                    size={20}
+                    color={connectionStatus.color}
                   />
-                  <Text
-                    className={
-                      selectedToken === token.symbol
-                        ? "text-white font-semibold"
-                        : "text-white font-medium"
-                    }
-                  >
-                    {token.symbol}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Amount Input */}
-          <View className="px-6 mb-6">
-            <Text className="text-white font-semibold text-lg mb-4">
-              Send Amount
-            </Text>
-
-            <View className="flex-row items-center bg-white/5 rounded-2xl border border-white/10 px-4 py-1 mb-4">
-              <Image
-                source={tokens.find((t) => t.symbol === selectedToken)?.icon}
-                className="w-6 h-6 mr-2"
-                resizeMode="contain"
-              />
-              <Text className="text-white/60 text-lg mr-2">
-                {selectedToken === "USDC" ? "$" : "◎"}
-              </Text>
-              <TextInput
-                value={amount}
-                onChangeText={setAmount}
-                placeholder="0.00"
-                placeholderTextColor="rgba(255,255,255,0.5)"
-                className="flex-1 text-white text-2xl h-16 font-semibold tracking-tight"
-                keyboardType="decimal-pad"
-                autoFocus
-              />
-            </View>
-
-            {/* Quick Amounts */}
-            <Text className="text-white/60 text-sm mb-3">Quick Amounts</Text>
-            <View className="flex-row flex-wrap gap-2">
-              {quickAmounts.map((quickAmount) => (
-                <TouchableOpacity
-                  key={quickAmount}
-                  onPress={() => setAmount(quickAmount.toString())}
-                  className={`px-4 py-2 rounded-full border ${
-                    amount === quickAmount.toString()
-                      ? "bg-primary/10 border-primary/90"
-                      : "bg-white/5 border-white/10"
-                  }`}
-                >
-                  <Text
-                    className={
-                      amount === quickAmount.toString()
-                        ? "text-white font-semibold text-sm"
-                        : "text-white font-medium text-sm"
-                    }
-                  >
-                    {selectedToken === "USDC" ? "$" : ""}
-                    {quickAmount}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Recipient Selection */}
-          <View className="px-6 mb-6">
-            <Text className="text-white font-semibold text-lg mb-4">
-              Send To Zypp User
-            </Text>
-
-            <View className="space-y-4">
-              {/* Input Field */}
-              <Input
-                value={recipient}
-                onChangeText={handleRecipientChange}
-                placeholder="Enter Zypp username"
-                placeholderTextColor="rgba(255,255,255,0.5)"
-                className={cn(
-                  "bg-white/5 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-t-2xl",
-                  recipient === "" && "rounded-b-2xl"
-                )}
-              />
-
-              {/* Selected User Display */}
-              {selectedUser && (
-                <View className="bg-primary/10 rounded-b-2xl p-4 border border-primary/20">
-                  <View className="flex-row items-center justify-between">
-                    <View className="flex-row items-center gap-3">
-                      <Image
-                        source={selectedUser.avatar}
-                        className="w-10 h-10 rounded-xl"
-                      />
-                      <View>
-                        <Text className="text-white font-semibold">
-                          {selectedUser.displayName}
-                        </Text>
-                        <Text className="text-white/60 text-sm">
-                          @{selectedUser.username}
-                        </Text>
-                      </View>
-                    </View>
-                    <View className="flex-row items-center gap-2">
-                      <View
-                        className={`w-2 h-2 rounded-full ${
-                          selectedUser.isOnline ? "bg-green-400" : "bg-gray-400"
-                        }`}
-                      />
-                      <Text className="text-white/60 text-xs">
-                        {selectedUser.isOnline ? "Online" : "Offline"}
-                      </Text>
-                    </View>
+                  <View>
+                    <Text className="text-white font-medium text-base">
+                      {connectionStatus.text}
+                    </Text>
+                    <Text className="text-white/60 text-xs">
+                      Connection Type: {type || "Unknown"}
+                    </Text>
                   </View>
                 </View>
-              )}
-
-              {/* Verification Status */}
-              {recipient && !selectedUser && (
-                <View className="bg-yellow-500/10 rounded-b-2xl p-3 border border-yellow-500/20">
-                  <Text className="text-yellow-400 text-sm text-center">
-                    User not found. Please select from available users.
-                  </Text>
-                </View>
-              )}
+                <Ionicons name="refresh" size={18} color="#9CA3AF" />
+              </TouchableOpacity>
             </View>
-          </View>
 
-          {/* Recent Zypp Users */}
-          <View className="px-6 mb-6">
-            <Text className="text-white font-semibold text-lg mb-4">
-              Recent Zypp Users
-            </Text>
-
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {/* Currency Selection */}
+            <View className="px-6 mb-6">
+              <Text className="text-white font-semibold text-lg mb-4">
+                Currency
+              </Text>
               <View className="flex-row gap-3">
-                {zyppUsers.slice(0, 3).map((user) => (
+                {tokens.map((token) => (
                   <TouchableOpacity
-                    key={user.id}
-                    onPress={() => handleUserSelect(user)}
-                    className="items-center"
+                    key={token.symbol}
+                    onPress={() => setSelectedToken(token.symbol)}
+                    className={`flex-row items-center gap-2 px-4 py-3 rounded-full border ${
+                      selectedToken === token.symbol
+                        ? "bg-primary/10 border-primary/90"
+                        : "bg-black/15 border-white/10"
+                    }`}
                   >
-                    <View className="relative">
-                      <Image
-                        source={user.avatar}
-                        className="w-16 h-16 rounded-2xl border-2 border-white/10"
-                      />
-                      <View
-                        className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-black ${
-                          user.isOnline ? "bg-green-400" : "bg-gray-400"
-                        }`}
-                      />
-                    </View>
-                    <Text className="text-white text-sm mt-2 max-w-16 text-center">
-                      {user.username}
+                    <Image
+                      source={token.icon}
+                      className="w-5 h-5"
+                      resizeMode="contain"
+                    />
+                    <Text
+                      className={
+                        selectedToken === token.symbol
+                          ? "text-white font-semibold"
+                          : "text-white font-medium"
+                      }
+                    >
+                      {token.symbol}
                     </Text>
                   </TouchableOpacity>
                 ))}
-
-                <TouchableOpacity
-                  className="items-center"
-                  onPress={handleFindMoreUsers}
-                >
-                  <View className="w-16 h-16 rounded-2xl border-2 border-dashed border-white/20 items-center justify-center">
-                    <IconSymbol name="plus" size={20} color="#9CA3AF" />
-                  </View>
-                  <Text className="text-white/60 text-sm mt-2">Find More</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </View>
-
-          {/* Balance & Status */}
-          <View className="px-6 mb-6">
-            <View className="bg-white/5 rounded-2xl p-4 border border-white/10 mb-4">
-              <View className="flex-row justify-between items-center">
-                <Text className="text-white/60 text-sm">Available Balance</Text>
-                <Text className="text-white font-semibold">
-                  {selectedToken === "USDC" ? "$2,458.90" : "24.5 SOL"}
-                </Text>
               </View>
             </View>
 
-            <View className="flex-row items-center justify-between bg-white/5 rounded-2xl p-4 border border-white/10">
-              <Text className="text-white/60 text-sm">Transaction Status</Text>
-              <Text className="text-primary text-sm font-medium">
-                {statusText}
+            {/* Amount Input */}
+            <View className="px-6 mb-6">
+              <Text className="text-white font-semibold text-lg mb-4">
+                Send Amount
               </Text>
-            </View>
-          </View>
 
-          {/* Send Button */}
-          <View className="px-6">
-            <TouchableOpacity
-              onPress={handleSend}
-              disabled={!amount || !selectedUser || isProcessing}
-              className={`py-4 rounded-full items-center ${
-                amount && selectedUser && !isProcessing
-                  ? "bg-primary active:bg-primary/90"
-                  : "bg-white/10"
-              }`}
-            >
-              {isProcessing ? (
-                <View className="flex-row items-center gap-3">
-                  <ActivityIndicator size="small" color="#081405" />
-                  <Text className="text-primary-foreground font-semibold text-lg">
-                    Processing...
+              <View className="flex-row items-center bg-black/15 rounded-2xl border border-white/10 px-4 py-1 mb-4">
+                <Image
+                  source={tokens.find((t) => t.symbol === selectedToken)?.icon}
+                  className="w-6 h-6 mr-2"
+                  resizeMode="contain"
+                />
+                <Text className="text-white/60 text-lg mr-2">
+                  {selectedToken === "USDC" ? "$" : "◎"}
+                </Text>
+                <TextInput
+                  value={amount}
+                  onChangeText={setAmount}
+                  placeholder="0.00"
+                  placeholderTextColor="rgba(255,255,255,0.5)"
+                  className="flex-1 text-white text-2xl h-16 font-semibold tracking-tight"
+                  keyboardType="decimal-pad"
+                  autoFocus
+                />
+              </View>
+
+              {/* Quick Amounts */}
+              <Text className="text-white/60 text-sm mb-3">Quick Amounts</Text>
+              <View className="flex-row flex-wrap gap-2">
+                {quickAmounts.map((quickAmount) => (
+                  <TouchableOpacity
+                    key={quickAmount}
+                    onPress={() => setAmount(quickAmount.toString())}
+                    className={`px-4 py-2 rounded-full border ${
+                      amount === quickAmount.toString()
+                        ? "bg-primary/10 border-primary/90"
+                        : "bg-black/15 border-white/10"
+                    }`}
+                  >
+                    <Text
+                      className={
+                        amount === quickAmount.toString()
+                          ? "text-white font-semibold text-sm"
+                          : "text-white font-medium text-sm"
+                      }
+                    >
+                      {selectedToken === "USDC" ? "$" : ""}
+                      {quickAmount}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Recipient Selection */}
+            <View className="px-6 mb-6">
+              <Text className="text-white font-semibold text-lg mb-4">
+                Send To Zypp User
+              </Text>
+
+              <View className="gap-4">
+                {/* Input Field */}
+                <Input
+                  value={recipient}
+                  onChangeText={handleRecipientChange}
+                  placeholder="Enter Zypp username"
+                  placeholderTextColor="rgba(255,255,255,0.5)"
+                  className={cn(
+                    "bg-black/15 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-t-2xl",
+                    recipient === "" && "rounded-b-2xl"
+                  )}
+                />
+
+                {/* Selected User Display */}
+                {selectedUser && (
+                  <View className="bg-primary/10 rounded-b-2xl p-4 border border-primary/20">
+                    <View className="flex-row items-center justify-between">
+                      <View className="flex-row items-center gap-3">
+                        <Image
+                          source={selectedUser.avatar}
+                          className="w-10 h-10 rounded-xl"
+                        />
+                        <View>
+                          <Text className="text-white font-semibold">
+                            {selectedUser.displayName}
+                          </Text>
+                          <Text className="text-white/60 text-sm">
+                            @{selectedUser.username}
+                          </Text>
+                        </View>
+                      </View>
+                      <View className="flex-row items-center gap-2">
+                        <View
+                          className={`w-2 h-2 rounded-full ${
+                            selectedUser.isOnline
+                              ? "bg-green-400"
+                              : "bg-gray-400"
+                          }`}
+                        />
+                        <Text className="text-white/60 text-xs">
+                          {selectedUser.isOnline ? "Online" : "Offline"}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                )}
+
+                {/* Verification Status */}
+                {recipient && !selectedUser && (
+                  <View className="bg-yellow-500/10 rounded-b-2xl p-3 border border-yellow-500/20">
+                    <Text className="text-yellow-400 text-sm text-center">
+                      User not found. Please select from available users.
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
+
+            {/* Recent Zypp Users */}
+            <View className="px-6 mb-6">
+              <Text className="text-white font-semibold text-lg mb-4">
+                Recent Zypp Users
+              </Text>
+
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View className="flex-row gap-3">
+                  {zyppUsers.slice(0, 3).map((user) => (
+                    <TouchableOpacity
+                      key={user.id}
+                      onPress={() => handleUserSelect(user)}
+                      className="items-center"
+                    >
+                      <View className="relative">
+                        <Image
+                          source={user.avatar}
+                          className="w-16 h-16 rounded-2xl border-2 border-white/10"
+                        />
+                        <View
+                          className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-black ${
+                            user.isOnline ? "bg-green-400" : "bg-gray-400"
+                          }`}
+                        />
+                      </View>
+                      <Text className="text-white text-sm mt-2 max-w-16 text-center">
+                        {user.username}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+
+                  <TouchableOpacity
+                    className="items-center"
+                    onPress={handleFindMoreUsers}
+                  >
+                    <View className="w-16 h-16 rounded-2xl border-2 border-dashed border-white/20 items-center justify-center">
+                      <IconSymbol name="plus" size={20} color="#9CA3AF" />
+                    </View>
+                    <Text className="text-white/60 text-sm mt-2">
+                      Find More
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ScrollView>
+            </View>
+
+            {/* Balance & Status */}
+            <View className="px-6 mb-6">
+              <View className="bg-black/15 rounded-2xl p-4 border border-white/10 mb-4">
+                <View className="flex-row justify-between items-center">
+                  <Text className="text-white/60 text-sm">
+                    Available Balance
+                  </Text>
+                  <Text className="text-white font-semibold">
+                    {selectedToken === "USDC" ? "$2,458.90" : "24.5 SOL"}
                   </Text>
                 </View>
-              ) : (
-                <Text
-                  className={`font-semibold text-lg ${
-                    amount && selectedUser
-                      ? "text-primary-foreground"
-                      : "text-white/40"
-                  }`}
-                >
-                  {isConnected ? "Send Payment" : "Queue Offline Payment"}
+              </View>
+
+              <View className="flex-row items-center justify-between bg-black/15 rounded-2xl p-4 border border-white/10">
+                <Text className="text-white/60 text-sm">
+                  Transaction Status
                 </Text>
-              )}
-            </TouchableOpacity>
-          </View>
+                <Text className="text-primary text-sm font-medium">
+                  {statusText}
+                </Text>
+              </View>
+            </View>
 
-          {/* Connection Info */}
-          <View className="px-6 mt-6">
-            <Text className="text-white/60 text-sm text-center">
-              {isConnected
-                ? "Transactions will be processed immediately"
-                : "Transactions will be queued and synced when online"}
-            </Text>
-          </View>
-        </ScrollView>
+            {/* Send Button */}
+            <View className="px-6">
+              <TouchableOpacity
+                onPress={handleSend}
+                disabled={!amount || !selectedUser || isProcessing}
+                className={`py-4 rounded-full items-center ${
+                  amount && selectedUser && !isProcessing
+                    ? "bg-primary active:bg-primary/90"
+                    : "bg-white/10"
+                }`}
+              >
+                {isProcessing ? (
+                  <View className="flex-row items-center gap-3">
+                    <ActivityIndicator size="small" color="#081405" />
+                    <Text className="text-primary-foreground font-semibold text-lg">
+                      Processing...
+                    </Text>
+                  </View>
+                ) : (
+                  <Text
+                    className={`font-semibold text-lg ${
+                      amount && selectedUser
+                        ? "text-primary-foreground"
+                        : "text-white/40"
+                    }`}
+                  >
+                    {isConnected ? "Send Payment" : "Queue Offline Payment"}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
 
-        {/* User List Modal */}
-        <UserListModal
-          visible={showUserListModal}
-          onClose={() => setShowUserListModal(false)}
-          onUserSelect={handleUserSelect}
-          isScanning={isScanningUsers}
-          onScanAgain={handleScanAgain}
-          users={zyppUsers}
-        />
+            {/* Connection Info */}
+            <View className="px-6 mt-6">
+              <Text className="text-white/60 text-sm text-center">
+                {isConnected
+                  ? "Transactions will be processed immediately"
+                  : "Transactions will be queued and synced when online"}
+              </Text>
+            </View>
+          </ScrollView>
 
-        {/* QR Scanner Modal */}
-        <QRScannerModal
-          visible={showQRScannerModal}
-          onClose={() => setShowQRScannerModal(false)}
-          onUserSelect={handleUserSelect}
-        />
-      </SafeAreaView>
-    </View>
+          {/* User List Modal */}
+          <UserListModal
+            visible={showUserListModal}
+            onClose={() => setShowUserListModal(false)}
+            onUserSelect={handleUserSelect}
+            isScanning={isScanningUsers}
+            onScanAgain={handleScanAgain}
+            users={zyppUsers}
+          />
+
+          {/* QR Scanner Modal */}
+          <QRScannerModal
+            visible={showQRScannerModal}
+            onClose={() => setShowQRScannerModal(false)}
+            onUserSelect={handleUserSelect}
+          />
+        </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }

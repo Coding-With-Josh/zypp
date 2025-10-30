@@ -1,9 +1,18 @@
+// ReceiveScreen.tsx
 import { Input, SafeAreaView, Text } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Alert, Image, ScrollView, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function ReceiveScreen() {
   const [activeTab, setActiveTab] = useState<"receive" | "request">("receive");
@@ -59,7 +68,7 @@ export default function ReceiveScreen() {
         <View className="mb-8">
           <Text className="text-white font-semibold text-lg mb-4">QR Code</Text>
 
-          <View className="bg-white/5 rounded-2xl border border-white/10 p-6 items-center">
+          <View className="bg-black/15 rounded-2xl border border-white/10 p-6 items-center">
             <View className="bg-white p-4 rounded-xl mb-4">
               <View className="w-64 h-64 bg-gray-800 items-center justify-center rounded-lg">
                 <View className="items-center">
@@ -94,7 +103,7 @@ export default function ReceiveScreen() {
                 className={`flex-row items-center gap-2 px-4 py-3 rounded-full border ${
                   selectedCurrency === currency.code
                     ? "bg-primary/10 border-primary/90"
-                    : "bg-white/5 border-white/10"
+                    : "bg-black/15 border-white/10"
                 }`}
               >
                 <Image
@@ -122,7 +131,7 @@ export default function ReceiveScreen() {
             Your {selectedCurrency} Address
           </Text>
 
-          <View className="bg-white/5 rounded-2xl border border-white/10 p-4 mb-4">
+          <View className="bg-black/15 rounded-2xl border border-white/10 p-4 mb-4">
             <Text className="text-white text-base text-center font-mono">
               {walletAddress}
             </Text>
@@ -131,7 +140,7 @@ export default function ReceiveScreen() {
           <View className="flex-row gap-3">
             <TouchableOpacity
               onPress={handleCopy}
-              className="flex-1 flex-row items-center justify-center gap-2 bg-white/5 py-3 rounded-xl border border-white/10 active:bg-white/10"
+              className="flex-1 flex-row items-center justify-center gap-2 bg-black/15 py-3 rounded-xl border border-white/10 active:bg-white/10"
             >
               <IconSymbol name="doc.on.doc" size={18} color="white" />
               <Text className="text-white font-semibold text-base">Copy</Text>
@@ -159,7 +168,7 @@ export default function ReceiveScreen() {
             Recent Transactions
           </Text>
 
-          <View className="bg-white/5 rounded-2xl border border-white/10 p-4">
+          <View className="bg-black/15 rounded-2xl border border-white/10 p-4">
             <View className="flex-row items-center justify-between py-3 border-b border-white/10">
               <View className="flex-row items-center gap-3">
                 <View className="w-10 h-10 bg-green-500/20 rounded-full items-center justify-center">
@@ -211,7 +220,7 @@ export default function ReceiveScreen() {
                 className={`flex-row items-center gap-2 px-4 py-3 rounded-full border ${
                   selectedCurrency === currency.code
                     ? "bg-primary/10 border-primary/90"
-                    : "bg-white/5 border-white/10"
+                    : "bg-black/15 border-white/10"
                 }`}
               >
                 <Image
@@ -239,7 +248,7 @@ export default function ReceiveScreen() {
             Request Amount
           </Text>
 
-          <View className="flex-row items-center bg-white/5 rounded-2xl border border-white/10 px-4 py-1 mb-4">
+          <View className="flex-row items-center bg-black/15 rounded-2xl border border-white/10 px-4 py-1 mb-4">
             <Image
               source={currencies.find((c) => c.code === selectedCurrency)?.icon}
               className="w-6 h-6 mr-2"
@@ -268,7 +277,7 @@ export default function ReceiveScreen() {
                 className={`px-4 py-2 rounded-full border ${
                   amount === quickAmount.toString()
                     ? "bg-primary/10 border-primary/90"
-                    : "bg-white/5 border-white/10"
+                    : "bg-black/15 border-white/10"
                 }`}
               >
                 <Text
@@ -296,7 +305,7 @@ export default function ReceiveScreen() {
             onChangeText={setRequestNote}
             placeholder="What is this payment for?"
             placeholderTextColor="rgba(255,255,255,0.5)"
-            className="bg-white/5 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-2xl"
+            className="bg-black/15 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-2xl"
             multiline
             numberOfLines={3}
             textAlignVertical="top"
@@ -309,7 +318,7 @@ export default function ReceiveScreen() {
             <Text className="text-white font-semibold text-lg mb-3">
               Payment Request
             </Text>
-            <View className="bg-white/5 rounded-2xl border border-white/10 p-4">
+            <View className="bg-black/15 rounded-2xl border border-white/10 p-4">
               <View className="flex-row justify-between items-center mb-3">
                 <Text className="text-white/60 text-sm">Amount</Text>
                 <View className="flex-row items-center justify-center">
@@ -364,7 +373,7 @@ export default function ReceiveScreen() {
           {amount && (
             <TouchableOpacity
               onPress={handleShare}
-              className="flex-row items-center justify-center gap-2 bg-white/5 py-4 rounded-full border border-white/10 active:bg-white/10"
+              className="flex-row items-center justify-center gap-2 bg-black/15 py-4 rounded-full border border-white/10 active:bg-white/10"
             >
               <IconSymbol name="square.and.arrow.up" size={20} color="white" />
               <Text className="text-white font-semibold text-lg">
@@ -378,81 +387,86 @@ export default function ReceiveScreen() {
   );
 
   return (
-    <View className="flex-1 bg-black relative">
-      {/* Gradient Background */}
-      <Image
-        source={require("@/assets/images/design/top-gradient.png")}
-        className="absolute top-0 left-0 right-0 w-full"
-        style={{ height: 400 }}
-        resizeMode="cover"
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      className="flex-1 bg-black"
+    >
+      <View className="flex-1 bg-black relative">
+        {/* Gradient Background */}
+        <Image
+          source={require("@/assets/images/design/top-gradient.png")}
+          className="absolute top-0 left-0 right-0 w-full"
+          style={{ height: 400 }}
+          resizeMode="cover"
+        />
 
-      <SafeAreaView className="flex-1 bg-transparent">
-        {/* Header */}
-        <View className="w-full px-6 pt-4 pb-4">
-          <View className="flex-row items-center justify-between">
-            <TouchableOpacity
-              onPress={() => router.back()}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-            >
-              <Ionicons name="chevron-back" size={24} color="white" />
-            </TouchableOpacity>
+        <SafeAreaView className="flex-1 bg-transparent">
+          {/* Header */}
+          <View className="w-full px-6 pt-4 pb-4">
+            <View className="flex-row items-center justify-between">
+              <TouchableOpacity
+                onPress={() => router.back()}
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+              >
+                <Ionicons name="chevron-back" size={24} color="white" />
+              </TouchableOpacity>
 
-            <Text className="text-white font-semibold text-xl">Receive</Text>
+              <Text className="text-white font-semibold text-xl">Receive</Text>
 
-            <TouchableOpacity
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-            >
-              <Ionicons name="ellipsis-horizontal" size={22} color="white" />
-            </TouchableOpacity>
+              <TouchableOpacity
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
+              >
+                <Ionicons name="ellipsis-horizontal" size={22} color="white" />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {/* Tabs */}
-        <View className="px-6 mb-6">
-          <View className="flex-row bg-black/15 rounded-2xl py-1 px-1 border border-white/10">
-            <TouchableOpacity
-              onPress={() => setActiveTab("receive")}
-              className={`flex-1 py-3 rounded-xl items-center ${
-                activeTab === "receive" ? "bg-primary" : "bg-transparent"
-              }`}
-            >
-              <Text
-                className={`font-semibold text-base ${
-                  activeTab === "receive"
-                    ? "text-primary-foreground"
-                    : "text-white"
+          {/* Tabs */}
+          <View className="px-6 mb-6">
+            <View className="flex-row bg-black/15 rounded-2xl py-1 px-1 border border-white/10">
+              <TouchableOpacity
+                onPress={() => setActiveTab("receive")}
+                className={`flex-1 py-3 rounded-xl items-center ${
+                  activeTab === "receive" ? "bg-primary" : "bg-transparent"
                 }`}
               >
-                Receive
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setActiveTab("request")}
-              className={`flex-1 py-3 rounded-2xl items-center ${
-                activeTab === "request" ? "bg-primary" : "bg-transparent"
-              }`}
-            >
-              <Text
-                className={`font-semibold text-base ${
-                  activeTab === "request"
-                    ? "text-primary-foreground"
-                    : "text-white"
+                <Text
+                  className={`font-semibold text-base ${
+                    activeTab === "receive"
+                      ? "text-primary-foreground"
+                      : "text-white"
+                  }`}
+                >
+                  Receive
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setActiveTab("request")}
+                className={`flex-1 py-3 rounded-2xl items-center ${
+                  activeTab === "request" ? "bg-primary" : "bg-transparent"
                 }`}
               >
-                Request
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  className={`font-semibold text-base ${
+                    activeTab === "request"
+                      ? "text-primary-foreground"
+                      : "text-white"
+                  }`}
+                >
+                  Request
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        {/* Tab Content */}
-        <View className="flex-1 px-6">
-          {activeTab === "receive" ? renderReceiveTab() : renderRequestTab()}
-        </View>
-      </SafeAreaView>
-    </View>
+          {/* Tab Content */}
+          <View className="flex-1 px-6">
+            {activeTab === "receive" ? renderReceiveTab() : renderRequestTab()}
+          </View>
+        </SafeAreaView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }

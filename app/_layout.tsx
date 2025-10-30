@@ -17,6 +17,13 @@ import {
   InstrumentSans_600SemiBold_Italic,
   InstrumentSans_700Bold_Italic,
 } from "@expo-google-fonts/instrument-sans";
+import {
+  SpaceGrotesk_300Light,
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from "@expo-google-fonts/space-grotesk";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
@@ -41,6 +48,11 @@ export default function RootLayout() {
     InstrumentSans_500Medium_Italic,
     InstrumentSans_600SemiBold_Italic,
     InstrumentSans_700Bold_Italic,
+    SpaceGrotesk_300Light,
+    SpaceGrotesk_400Regular,
+    SpaceGrotesk_500Medium,
+    SpaceGrotesk_600SemiBold,
+    SpaceGrotesk_700Bold,
   });
 
   useEffect(() => {

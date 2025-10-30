@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
+import { Ionicons } from "@expo/vector-icons";
+import { BlurView } from "expo-blur";
+import React, { useEffect } from "react";
 import {
-  Modal as RNModal,
-  TouchableWithoutFeedback,
-  View,
   Animated,
   Dimensions,
   Platform,
-} from 'react-native';
-import { BlurView } from 'expo-blur';
-import { Text } from './text';
-import { IconSymbol } from './IconSymbol';
-import { Ionicons } from '@expo/vector-icons';
+  Modal as RNModal,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { IconSymbol } from "./IconSymbol";
+import { Text } from "./text";
 
-const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 interface ModalProps {
   visible: boolean;
@@ -25,7 +25,7 @@ interface ModalProps {
   closeOnBackdropPress?: boolean;
   height?: number | string;
   maxHeight?: number | string;
-  animationType?: 'slide' | 'fade' | 'none';
+  animationType?: "slide" | "fade" | "none";
   backdropBlur?: boolean;
   customHeader?: React.ReactNode;
   swipeToClose?: boolean;
@@ -43,9 +43,9 @@ export const Modal: React.FC<ModalProps> = ({
   showHeader = true,
   showCloseButton = true,
   closeOnBackdropPress = true,
-  height = 'auto',
-  maxHeight = '90%',
-  animationType = 'slide',
+  height = "auto",
+  maxHeight = "90%",
+  animationType = "slide",
   backdropBlur = true,
   customHeader,
   swipeToClose = true,
@@ -58,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (visible) {
-      if (animationType === 'slide') {
+      if (animationType === "slide") {
         Animated.timing(slideAnim, {
           toValue: 0,
           duration: 300,
@@ -71,7 +71,7 @@ export const Modal: React.FC<ModalProps> = ({
         useNativeDriver: true,
       }).start();
     } else {
-      if (animationType === 'slide') {
+      if (animationType === "slide") {
         Animated.timing(slideAnim, {
           toValue: SCREEN_HEIGHT,
           duration: 250,
@@ -106,12 +106,12 @@ export const Modal: React.FC<ModalProps> = ({
         <View className="flex-row items-center flex-1">
           {showBackButton && (
             <TouchableWithoutFeedback onPress={onBack}>
-              <View className="w-10 h-10 rounded-full bg-white/5 items-center justify-center mr-3">
+              <View className="w-10 h-10 rounded-full bg-black/15 items-center justify-center mr-3">
                 <Ionicons name="chevron-back" size={20} color="white" />
               </View>
             </TouchableWithoutFeedback>
           )}
-          
+
           <View className="flex-1">
             {title && (
               <Text className="text-white font-semibold text-xl text-center">
@@ -128,7 +128,7 @@ export const Modal: React.FC<ModalProps> = ({
 
         {showCloseButton && (
           <TouchableWithoutFeedback onPress={onClose}>
-            <View className="w-10 h-10 rounded-full bg-white/5 items-center justify-center ml-3">
+            <View className="w-10 h-10 rounded-full bg-black/15 items-center justify-center ml-3">
               <IconSymbol name="xmark" size={20} color="white" />
             </View>
           </TouchableWithoutFeedback>
@@ -140,7 +140,7 @@ export const Modal: React.FC<ModalProps> = ({
   const modalStyle = {
     height,
     maxHeight,
-    transform: animationType === 'slide' ? [{ translateY: slideAnim }] : [],
+    transform: animationType === "slide" ? [{ translateY: slideAnim }] : [],
   };
 
   return (
@@ -153,16 +153,12 @@ export const Modal: React.FC<ModalProps> = ({
     >
       {/* Backdrop */}
       <TouchableWithoutFeedback onPress={handleBackdropPress}>
-        <Animated.View 
+        <Animated.View
           className="flex-1 bg-black"
           style={{ opacity: fadeAnim }}
         >
-          {backdropBlur && Platform.OS === 'ios' && (
-            <BlurView
-              intensity={80}
-              tint="dark"
-              className="flex-1"
-            />
+          {backdropBlur && Platform.OS === "ios" && (
+            <BlurView intensity={80} tint="dark" className="flex-1" />
           )}
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -181,9 +177,7 @@ export const Modal: React.FC<ModalProps> = ({
 
             {renderHeader()}
 
-            <View className="flex-1">
-              {children}
-            </View>
+            <View className="flex-1">{children}</View>
           </Animated.View>
         </TouchableWithoutFeedback>
       </View>
@@ -200,38 +194,41 @@ export const AlertModal: React.FC<{
   buttons?: Array<{
     text: string;
     onPress: () => void;
-    variant?: 'primary' | 'secondary' | 'destructive';
+    variant?: "primary" | "secondary" | "destructive";
   }>;
 }> = ({ visible, onClose, title, message, buttons = [] }) => {
-  const defaultButtons = buttons.length === 0 ? [
-    {
-      text: 'OK',
-      onPress: onClose,
-      variant: 'primary' as const,
-    },
-  ] : buttons;
+  const defaultButtons =
+    buttons.length === 0
+      ? [
+          {
+            text: "OK",
+            onPress: onClose,
+            variant: "primary" as const,
+          },
+        ]
+      : buttons;
 
   const getButtonStyle = (variant: string) => {
     switch (variant) {
-      case 'primary':
-        return 'bg-primary';
-      case 'destructive':
-        return 'bg-red-500';
-      case 'secondary':
+      case "primary":
+        return "bg-primary";
+      case "destructive":
+        return "bg-red-500";
+      case "secondary":
       default:
-        return 'bg-white/10';
+        return "bg-white/10";
     }
   };
 
   const getButtonTextStyle = (variant: string) => {
     switch (variant) {
-      case 'primary':
-        return 'text-primary-foreground';
-      case 'destructive':
-        return 'text-white';
-      case 'secondary':
+      case "primary":
+        return "text-primary-foreground";
+      case "destructive":
+        return "text-white";
+      case "secondary":
       default:
-        return 'text-white';
+        return "text-white";
     }
   };
 
@@ -247,15 +244,18 @@ export const AlertModal: React.FC<{
         <Text className="text-white/80 text-base text-center leading-6 mb-6">
           {message}
         </Text>
-        
-        <View className={`gap-3 ${defaultButtons.length > 2 ? 'flex-col' : 'flex-row'}`}>
+
+        <View
+          className={`gap-3 ${defaultButtons.length > 2 ? "flex-col" : "flex-row"}`}
+        >
           {defaultButtons.map((button, index) => (
-            <TouchableWithoutFeedback
-              key={index}
-              onPress={button.onPress}
-            >
-              <View className={`flex-1 py-4 rounded-full items-center ${getButtonStyle(button.variant || 'secondary')}`}>
-                <Text className={`font-semibold text-base ${getButtonTextStyle(button.variant || 'secondary')}`}>
+            <TouchableWithoutFeedback key={index} onPress={button.onPress}>
+              <View
+                className={`flex-1 py-4 rounded-full items-center ${getButtonStyle(button.variant || "secondary")}`}
+              >
+                <Text
+                  className={`font-semibold text-base ${getButtonTextStyle(button.variant || "secondary")}`}
+                >
                   {button.text}
                 </Text>
               </View>
@@ -276,7 +276,7 @@ export const ActionSheet: React.FC<{
     title: string;
     subtitle?: string;
     onPress: () => void;
-    variant?: 'default' | 'destructive';
+    variant?: "default" | "destructive";
   }>;
   showCancel?: boolean;
 }> = ({ visible, onClose, title, actions, showCancel = true }) => {
@@ -297,23 +297,31 @@ export const ActionSheet: React.FC<{
               onClose();
             }}
           >
-            <View className={`flex-row items-center px-4 py-4 ${
-              index !== actions.length - 1 ? 'border-b border-white/10' : ''
-            } ${action.variant === 'destructive' ? 'text-red-400' : 'text-white'}`}>
+            <View
+              className={`flex-row items-center px-4 py-4 ${
+                index !== actions.length - 1 ? "border-b border-white/10" : ""
+              } ${action.variant === "destructive" ? "text-red-400" : "text-white"}`}
+            >
               {action.icon && (
-                <View className="w-10 h-10 rounded-full bg-white/5 items-center justify-center mr-3">
-                  <Ionicons 
-                    name={action.icon} 
-                    size={20} 
-                    color={action.variant === 'destructive' ? '#EF4444' : 'white'} 
+                <View className="w-10 h-10 rounded-full bg-black/15 items-center justify-center mr-3">
+                  <Ionicons
+                    name={action.icon}
+                    size={20}
+                    color={
+                      action.variant === "destructive" ? "#EF4444" : "white"
+                    }
                   />
                 </View>
               )}
-              
+
               <View className="flex-1">
-                <Text className={`font-medium text-base ${
-                  action.variant === 'destructive' ? 'text-red-400' : 'text-white'
-                }`}>
+                <Text
+                  className={`font-medium text-base ${
+                    action.variant === "destructive"
+                      ? "text-red-400"
+                      : "text-white"
+                  }`}
+                >
                   {action.title}
                 </Text>
                 {action.subtitle && (
@@ -322,22 +330,24 @@ export const ActionSheet: React.FC<{
                   </Text>
                 )}
               </View>
-              
-              <IconSymbol 
-                name="chevron.right" 
-                size={16} 
-                color={action.variant === 'destructive' ? '#EF4444' : '#9CA3AF'} 
+
+              <IconSymbol
+                name="chevron.right"
+                size={16}
+                color={action.variant === "destructive" ? "#EF4444" : "#9CA3AF"}
               />
             </View>
           </TouchableWithoutFeedback>
         ))}
-        
+
         {showCancel && (
           <>
             <View className="h-4" />
             <TouchableWithoutFeedback onPress={onClose}>
-              <View className="bg-white/5 rounded-2xl py-4 items-center">
-                <Text className="text-white font-semibold text-base">Cancel</Text>
+              <View className="bg-black/15 rounded-2xl py-4 items-center">
+                <Text className="text-white font-semibold text-base">
+                  Cancel
+                </Text>
               </View>
             </TouchableWithoutFeedback>
           </>
@@ -353,7 +363,7 @@ export const BottomSheet: React.FC<{
   children: React.ReactNode;
   title?: string;
   height?: number | string;
-}> = ({ visible, onClose, children, title, height = '50%' }) => {
+}> = ({ visible, onClose, children, title, height = "50%" }) => {
   return (
     <Modal
       visible={visible}

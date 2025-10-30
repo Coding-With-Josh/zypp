@@ -1,9 +1,20 @@
 // components/QRScannerModal.tsx
-import React, { useState } from "react";
-import { ActivityIndicator, TouchableOpacity, Alert, Linking, Modal } from "react-native";
-import { SafeAreaView, Text, View, useCameraPermissions } from "@/components/ui";
+import {
+  SafeAreaView,
+  Text,
+  View,
+  useCameraPermissions,
+} from "@/components/ui";
 import { Ionicons } from "@expo/vector-icons";
 import { CameraView } from "expo-camera";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Linking,
+  Modal,
+  TouchableOpacity,
+} from "react-native";
 
 interface QRScannerModalProps {
   visible: boolean;
@@ -19,9 +30,15 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
 
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
     setScanned(true);
-    
+
     try {
       // Try to parse QR code data as user information
       let userData;
@@ -42,17 +59,18 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
           isOnline: true,
         },
         {
-          id: "2", 
+          id: "2",
           username: "crypto_wallet",
           displayName: "Crypto Pro",
           avatar: require("@/assets/images/design/user.png"),
           isOnline: false,
-        }
+        },
       ];
 
-      const foundUser = mockUsers.find(user => 
-        user.username.toLowerCase().includes(data.toLowerCase()) ||
-        user.displayName.toLowerCase().includes(data.toLowerCase())
+      const foundUser = mockUsers.find(
+        (user) =>
+          user.username.toLowerCase().includes(data.toLowerCase()) ||
+          user.displayName.toLowerCase().includes(data.toLowerCase())
       );
 
       if (foundUser) {
@@ -60,21 +78,17 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
         onClose();
         Alert.alert("Success", `Found user: ${foundUser.displayName}`);
       } else {
-        Alert.alert(
-          "QR Code Scanned",
-          `Scanned data: ${data}`,
-          [
-            {
-              text: "Scan Again",
-              onPress: () => setScanned(false),
-            },
-            {
-              text: "Close",
-              onPress: onClose,
-              style: "cancel",
-            },
-          ]
-        );
+        Alert.alert("QR Code Scanned", `Scanned data: ${data}`, [
+          {
+            text: "Scan Again",
+            onPress: () => setScanned(false),
+          },
+          {
+            text: "Close",
+            onPress: onClose,
+            style: "cancel",
+          },
+        ]);
       }
     } catch (error) {
       Alert.alert("Error", "Failed to process QR code data");
@@ -83,13 +97,13 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
   };
 
   const handleRequestPermission = async () => {
-    if (cameraPermission?.status === 'denied') {
+    if (cameraPermission?.status === "denied") {
       Alert.alert(
         "Camera Access Required",
         "Please enable camera permissions in your device settings to scan QR codes.",
         [
           { text: "Cancel", style: "cancel" },
-          { text: "Open Settings", onPress: () => Linking.openSettings() }
+          { text: "Open Settings", onPress: () => Linking.openSettings() },
         ]
       );
       return;
@@ -97,7 +111,10 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
 
     const result = await requestCameraPermission();
     if (!result.granted) {
-      Alert.alert("Permission Denied", "Camera permission is required to scan QR codes.");
+      Alert.alert(
+        "Permission Denied",
+        "Camera permission is required to scan QR codes."
+      );
     }
   };
 
@@ -115,7 +132,7 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
             <View className="flex-row items-center justify-between">
               <TouchableOpacity
                 onPress={onClose}
-                className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               >
                 <Ionicons name="close" size={24} color="white" />
               </TouchableOpacity>
@@ -132,7 +149,9 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
             {cameraPermission === null ? (
               <View className="flex-1 items-center justify-center">
                 <ActivityIndicator size="large" color="#22C55E" />
-                <Text className="text-white mt-4">Requesting camera permission...</Text>
+                <Text className="text-white mt-4">
+                  Requesting camera permission...
+                </Text>
               </View>
             ) : !cameraPermission.granted ? (
               <View className="flex-1 items-center justify-center px-6">
@@ -170,12 +189,13 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
                         <View className="absolute -bottom-1 -left-1 w-8 h-8 border-b-2 border-l-2 border-primary" />
                         <View className="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-primary" />
                       </View>
-                      
+
                       <Text className="text-white font-semibold text-lg mt-8 text-center">
                         Position QR Code in Frame
                       </Text>
                       <Text className="text-white/60 text-center mt-2 px-8">
-                        Scan a Zypp user&apos;s QR code to quickly add them as a recipient
+                        Scan a Zypp user&apos;s QR code to quickly add them as a
+                        recipient
                       </Text>
                     </View>
 
@@ -185,18 +205,24 @@ export const QRScannerModal: React.FC<QRScannerModalProps> = ({
                         onPress={() => setScanned(false)}
                         disabled={!scanned}
                         className={`flex-row items-center justify-center gap-3 py-4 rounded-full ${
-                          scanned ? 'bg-primary active:bg-primary/90' : 'bg-white/10'
+                          scanned
+                            ? "bg-primary active:bg-primary/90"
+                            : "bg-white/10"
                         }`}
                       >
-                        <Ionicons 
-                          name="scan" 
-                          size={20} 
-                          color={scanned ? "#081405" : "#9CA3AF"} 
+                        <Ionicons
+                          name="scan"
+                          size={20}
+                          color={scanned ? "#081405" : "#9CA3AF"}
                         />
-                        <Text className={`font-semibold text-lg ${
-                          scanned ? 'text-primary-foreground' : 'text-white/40'
-                        }`}>
-                          {scanned ? 'Tap to Scan Again' : 'Scanning...'}
+                        <Text
+                          className={`font-semibold text-lg ${
+                            scanned
+                              ? "text-primary-foreground"
+                              : "text-white/40"
+                          }`}
+                        >
+                          {scanned ? "Tap to Scan Again" : "Scanning..."}
                         </Text>
                       </TouchableOpacity>
                     </View>

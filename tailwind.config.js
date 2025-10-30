@@ -1,18 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./App.tsx", "./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./App.tsx",
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+  ],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
-       fontFamily: {
-        'sans': ['InstrumentSans_400Regular', 'sans-serif'],
-        'medium': ['InstrumentSans_500Medium', 'sans-serif'],
-        'semibold': ['InstrumentSans_600SemiBold', 'sans-serif'],
-        'bold': ['InstrumentSans_700Bold', 'sans-serif'],
-        'italic': ['InstrumentSans_400Regular_Italic', 'sans-serif'],
-        'medium-italic': ['InstrumentSans_500Medium_Italic', 'sans-serif'],
-        'semibold-italic': ['InstrumentSans_600SemiBold_Italic', 'sans-serif'],
-        'bold-italic': ['InstrumentSans_700Bold_Italic', 'sans-serif'],
+      fontFamily: {
+        sans: ["InstrumentSans_400Regular", "sans-serif"],
+        medium: ["InstrumentSans_500Medium", "sans-serif"],
+        semibold: ["InstrumentSans_600SemiBold", "sans-serif"],
+        bold: ["InstrumentSans_700Bold", "sans-serif"],
+        italic: ["InstrumentSans_400Regular_Italic", "sans-serif"],
+        "medium-italic": ["InstrumentSans_500Medium_Italic", "sans-serif"],
+        "semibold-italic": ["InstrumentSans_600SemiBold_Italic", "sans-serif"],
+        "bold-italic": ["InstrumentSans_700Bold_Italic", "sans-serif"],
+        mono: ["SpaceGrotesk_400Regular", "sans-serif"],
+        "mono-medium": ["SpaceGrotesk_500Medium", "sans-serif"],
+        "mono-semibold": ["SpaceGrotesk_600SemiBold", "sans-serif"],
+        "mono-bold": ["SpaceGrotesk_700Bold", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

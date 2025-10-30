@@ -1,13 +1,23 @@
+import { QRScannerModal } from "@/components/blocks/modals/qr-scanner-modal";
 import { SafeAreaView, Text } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
-import { Image, ScrollView, TouchableOpacity, View, Alert } from "react-native";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Switch,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function MeScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [showQRScannerModal, setShowQRScannerModal] = useState(false);
   const [biometricsEnabled, setBiometricsEnabled] = useState(true);
+  const [darkModeEnabled, setDarkModeEnabled] = useState(true);
 
   const menuSections = [
     {
@@ -17,19 +27,31 @@ export default function MeScreen() {
           icon: "person-outline",
           title: "Profile",
           subtitle: "Manage your personal information",
-          onPress: () => console.log("Navigate to profile"),
+          onPress: () => router.push("/profile/edit"),
         },
         {
           icon: "scan",
           title: "My QR Code",
           subtitle: "Your personal payment QR code",
-          onPress: () => console.log("Show QR code"),
+          onPress: () => router.push("/profile/qr-code"),
         },
         {
           icon: "shield-outline",
           title: "Security",
           subtitle: "PIN, biometrics, and security settings",
-          onPress: () => console.log("Navigate to security"),
+          onPress: () => router.push("/profile/security"),
+        },
+        {
+          icon: "wallet-outline",
+          title: "Wallet Addresses",
+          subtitle: "View all your wallet addresses",
+          onPress: () => router.push("/profile/wallet-addresses"),
+        },
+        {
+          icon: "receipt-outline",
+          title: "Transaction History",
+          subtitle: "View your transaction history",
+          onPress: () => router.push("/transaction-history"),
         },
       ],
     },
@@ -56,36 +78,50 @@ export default function MeScreen() {
           icon: "globe-outline",
           title: "Language",
           subtitle: "English",
-          onPress: () => console.log("Change language"),
+          onPress: () => router.push("/profile/language"),
         },
         {
           icon: "moon-outline",
           title: "Dark Mode",
           subtitle: "Always on",
-          onPress: () => console.log("Toggle theme"),
+          type: "toggle",
+          value: darkModeEnabled,
+          onToggle: setDarkModeEnabled,
+        },
+        {
+          icon: "card-outline",
+          title: "Currency",
+          subtitle: "USD - US Dollar",
+          onPress: () => router.push("/profile/currency"),
         },
       ],
     },
     {
-      title: "Support",
+      title: "Support & Information",
       items: [
         {
           icon: "help-circle-outline",
           title: "Help & Support",
           subtitle: "FAQ and contact support",
-          onPress: () => console.log("Open help"),
+          onPress: () => router.push("/profile/support"),
         },
         {
           icon: "document-outline",
-          title: "Terms & Privacy",
+          title: "Terms & Conditions",
           subtitle: "Legal documents",
-          onPress: () => console.log("Show terms"),
+          onPress: () => router.push("/profile/terms"),
+        },
+        {
+          icon: "lock-closed-outline",
+          title: "Privacy Policy",
+          subtitle: "How we handle your data",
+          onPress: () => router.push("/profile/privacy"),
         },
         {
           icon: "information-circle-outline",
           title: "About The Zypp Wallet",
           subtitle: "App version 1.0.0",
-          onPress: () => console.log("Show about"),
+          onPress: () => router.push("/profile/about"),
         },
       ],
     },
@@ -100,9 +136,18 @@ export default function MeScreen() {
         onPress: () => {
           console.log("Logging out...");
           // Handle logout logic
+          router.replace("/auth/login");
         },
       },
     ]);
+  };
+
+  const handleEditProfile = () => {
+    router.push("/profile/edit");
+  };
+
+  const handleSettings = () => {
+    router.push("/profile/settings");
   };
 
   return (
@@ -119,9 +164,10 @@ export default function MeScreen() {
         {/* Header */}
         <View className="w-full px-5 pt-4 pb-6">
           <View className="flex-row items-center justify-between">
-            <Text className="text-black font-semibold text-3xl">Profile</Text>
+            <Text className="text-white font-semibold text-3xl">Profile</Text>
             <TouchableOpacity
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              onPress={handleSettings}
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <Ionicons name="settings-outline" size={22} color="white" />
@@ -137,15 +183,29 @@ export default function MeScreen() {
           {/* Profile Header */}
           <View className="px-6 mb-8">
             <View className="flex-row items-center gap-4 mb-6">
-              <Image
-                source={require("@/assets/images/design/user.png")}
-                className="w-20 h-20 rounded-2xl border-2 border-primary"
-              />
+              <TouchableOpacity onPress={handleEditProfile}>
+                <Image
+                  source={require("@/assets/images/design/user.png")}
+                  className="w-20 h-20 rounded-2xl border-2 border-primary"
+                />
+              </TouchableOpacity>
               <View className="flex-1">
-                <Text className="text-white font-semibold text-2xl mb-1">
-                  josh_scriptz
-                </Text>
-                <Text className="text-white/60 text-base">Premium Member</Text>
+                <View className="flex-row items-center justify-between">
+                  <View>
+                    <Text className="text-white font-semibold text-2xl mb-1">
+                      josh_scriptz
+                    </Text>
+                    <Text className="text-white/60 text-base">
+                      Premium Member
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={handleEditProfile}
+                    className="w-10 h-10 rounded-full bg-white/10 items-center justify-center"
+                  >
+                    <Ionicons name="create-outline" size={18} color="white" />
+                  </TouchableOpacity>
+                </View>
                 <View className="flex-row items-center gap-2 mt-2">
                   <View className="bg-green-500/20 px-2 py-1 rounded-full">
                     <Text className="text-green-400 text-xs font-medium">
@@ -158,23 +218,80 @@ export default function MeScreen() {
             </View>
 
             {/* Stats */}
-            <View className="flex-row justify-between bg-white/5 rounded-2xl p-4 border border-white/10">
-              <View className="items-center flex-1">
+            <View className="flex-row justify-between bg-black/15 rounded-2xl p-4 border border-white/10">
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/transaction-history")}
+              >
                 <Text className="text-white font-semibold text-lg">24</Text>
                 <Text className="text-white/60 text-xs">Transactions</Text>
-              </View>
+              </TouchableOpacity>
               <View className="w-px bg-white/10" />
-              <View className="items-center flex-1">
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/home")}
+              >
                 <Text className="text-white font-semibold text-lg">$2,458</Text>
                 <Text className="text-white/60 text-xs">Balance</Text>
-              </View>
+              </TouchableOpacity>
               <View className="w-px bg-white/10" />
-              <View className="items-center flex-1">
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/profile/contacts")}
+              >
                 <Text className="text-white font-semibold text-lg">12</Text>
                 <Text className="text-white/60 text-xs">Contacts</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           </View>
+
+          {/* Quick Actions */}
+          {/* <View className="px-6 mb-8">
+            <Text className="text-white/60 font-medium text-sm mb-4 uppercase tracking-wider">
+              Quick Actions
+            </Text>
+            <View className="flex-row justify-between">
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/send")}
+              >
+                <View className="w-14 h-14 bg-primary/20 rounded-2xl items-center justify-center mb-2">
+                  <Ionicons name="share" size={24} color="#22C55E" />
+                </View>
+                <Text className="text-white text-sm font-medium">Send</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/receive")}
+              >
+                <View className="w-14 h-14 bg-primary/20 rounded-2xl items-center justify-center mb-2">
+                  <Ionicons name="download" size={24} color="#22C55E" />
+                </View>
+                <Text className="text-white text-sm font-medium">Receive</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => router.push("/add-cash")}
+              >
+                <View className="w-14 h-14 bg-primary/20 rounded-2xl items-center justify-center mb-2">
+                  <Ionicons name="add" size={24} color="#22C55E" />
+                </View>
+                <Text className="text-white text-sm font-medium">Add Cash</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                className="items-center flex-1"
+                onPress={() => setShowQRScannerModal(true)}
+              >
+                <View className="w-14 h-14 bg-primary/20 rounded-2xl items-center justify-center mb-2">
+                  <Ionicons name="scan" size={24} color="#22C55E" />
+                </View>
+                <Text className="text-white text-sm font-medium">QR Code</Text>
+              </TouchableOpacity>
+            </View>
+          </View> */}
 
           {/* Menu Sections */}
           <View className="px-6">
@@ -184,7 +301,7 @@ export default function MeScreen() {
                   {section.title}
                 </Text>
 
-                <View className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                <View className="bg-black/15 rounded-2xl border border-white/10 overflow-hidden">
                   {section.items.map((item, itemIndex) => (
                     <TouchableOpacity
                       key={itemIndex}
@@ -196,7 +313,11 @@ export default function MeScreen() {
                       }`}
                     >
                       <View className="w-10 h-10 rounded-xl bg-primary/20 items-center justify-center mr-3">
-                        <Ionicons name={item.icon} size={20} color="#22C55E" />
+                        <Ionicons
+                          name={item.icon as any}
+                          size={20}
+                          color="#22C55E"
+                        />
                       </View>
 
                       <View className="flex-1">
@@ -209,18 +330,12 @@ export default function MeScreen() {
                       </View>
 
                       {item.type === "toggle" ? (
-                        <TouchableOpacity
-                          onPress={() => item.onToggle?.(!item.value)}
-                          className={`w-12 h-6 rounded-full ${
-                            item.value ? "bg-primary" : "bg-white/20"
-                          }`}
-                        >
-                          <View
-                            className={`w-5 h-5 rounded-full bg-white absolute top-0.5 ${
-                              item.value ? "right-0.5" : "left-0.5"
-                            }`}
-                          />
-                        </TouchableOpacity>
+                        <Switch
+                          value={item.value}
+                          onValueChange={item.onToggle}
+                          trackColor={{ false: "#6B7280", true: "#22C55E" }}
+                          thumbColor={item.value ? "#FFFFFF" : "#F3F4F6"}
+                        />
                       ) : (
                         <IconSymbol
                           name="chevron.right"
@@ -237,15 +352,27 @@ export default function MeScreen() {
             {/* Logout Button */}
             <TouchableOpacity
               onPress={handleLogout}
-              className="bg-red-500/10 border border-red-500/20 rounded-2xl py-4 items-center active:bg-red-500/20"
+              className="bg-red-500/10 border border-red-500/20 rounded-2xl py-4 items-center active:bg-red-500/20 mb-8"
             >
               <Text className="text-red-400 font-semibold text-base">
                 Log Out
               </Text>
             </TouchableOpacity>
+
+            {/* App Version */}
+            <View className="items-center">
+              <Text className="text-white/40 text-sm">Zypp Wallet v1.0.0</Text>
+              <Text className="text-white/30 text-xs mt-1">
+                Built with ❤️ for the Solana community
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
+      <QRScannerModal
+        visible={showQRScannerModal}
+        onClose={() => setShowQRScannerModal(false)}
+      />
     </View>
   );
 }

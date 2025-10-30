@@ -1,8 +1,8 @@
 import { Input, Text, View } from "@/components/ui";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import { router } from "expo-router";
-import React, { useState, useRef, useEffect } from "react";
-import { Image, TouchableOpacity, Animated, Alert } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Animated, Image, TouchableOpacity } from "react-native";
 
 const ConnectWallet = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +76,7 @@ const ConnectWallet = () => {
                       ${
                         selectedOption === type
                           ? "border-primary bg-primary/10"
-                          : "border-white/10 bg-white/5"
+                          : "border-white/10 bg-black/15"
                       }`}
       onPress={() => {
         setSelectedOption(type);
@@ -152,7 +152,7 @@ const ConnectWallet = () => {
             onChangeText={setWalletAddress}
             placeholder="Enter your wallet address"
             placeholderTextColor="rgba(255,255,255,0.5)"
-            className="bg-white/5 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-2xl"
+            className="bg-black/15 text-lg px-5 py-4 text-white/90 font-medium border-white/10 rounded-2xl"
             multiline
             numberOfLines={3}
             textAlignVertical="top"

@@ -1,8 +1,8 @@
-import React from "react";
-import { Image, TouchableOpacity, View, ScrollView } from "react-native";
 import { SafeAreaView, Text } from "@/components/ui";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
+import React from "react";
+import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function TransactionDetails() {
   const params = useLocalSearchParams();
@@ -159,7 +159,7 @@ export default function TransactionDetails() {
           <View className="flex-row items-center justify-between">
             <TouchableOpacity
               onPress={() => router.back()}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <Ionicons name="chevron-back" size={24} color="white" />
@@ -171,7 +171,7 @@ export default function TransactionDetails() {
 
             <TouchableOpacity
               onPress={handleShare}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <Ionicons name="share-outline" size={20} color="white" />
@@ -186,7 +186,7 @@ export default function TransactionDetails() {
         >
           {/* Main Transaction Card */}
           <View className="px-5 mb-6">
-            <View className="bg-white/5 rounded-3xl border border-white/10 p-6">
+            <View className="bg-black/15 rounded-3xl border border-white/10 p-6">
               {/* Amount Section */}
               <View className="items-center mb-6">
                 <View
@@ -267,7 +267,7 @@ export default function TransactionDetails() {
               Transaction Details
             </Text>
 
-            <View className="bg-white/5 rounded-3xl border border-white/10 overflow-hidden">
+            <View className="bg-black/15 rounded-3xl border border-white/10 overflow-hidden">
               {/* Date & Time */}
               <View className="p-4 border-b border-white/10">
                 <View className="flex-row justify-between items-center">
@@ -396,7 +396,7 @@ export default function TransactionDetails() {
               <Text className="text-white font-semibold text-xl mb-4">
                 Note
               </Text>
-              <View className="bg-white/5 rounded-3xl border border-white/10 p-4">
+              <View className="bg-black/15 rounded-3xl border border-white/10 p-4">
                 <Text className="text-white/80 text-base leading-6">
                   {transaction.note}
                 </Text>
@@ -409,7 +409,7 @@ export default function TransactionDetails() {
             <Text className="text-white font-semibold text-xl mb-4">
               Transaction Timeline
             </Text>
-            <View className="bg-white/5 rounded-3xl border border-white/10 p-4">
+            <View className="bg-black/15 rounded-3xl border border-white/10 p-4">
               {/* Timeline steps would go here */}
               <View className="flex-row items-center gap-3 py-2">
                 <View className="w-3 h-3 bg-green-400 rounded-full" />

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Image, TouchableOpacity, View, ScrollView } from "react-native";
 import { SafeAreaView, Text } from "@/components/ui";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import React, { useState } from "react";
+import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 
 export default function TransactionHistory() {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -202,7 +202,7 @@ export default function TransactionHistory() {
           <View className="flex-row items-center justify-between">
             <TouchableOpacity
               onPress={() => router.back()}
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <Ionicons name="chevron-back" size={24} color="white" />
@@ -213,7 +213,7 @@ export default function TransactionHistory() {
             </Text>
 
             <TouchableOpacity
-              className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+              className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               style={{ backgroundColor: "rgba(0, 0, 0, 0.4)" }}
             >
               <AntDesign name="filter" size={20} color="white" />
@@ -235,7 +235,7 @@ export default function TransactionHistory() {
               className={`px-6 h-12 flex items-center flex-row rounded-full border ${
                 selectedFilter === filter.id
                   ? "bg-primary border-primary"
-                  : "bg-white/5 border-white/10"
+                  : "bg-black/15 border-white/10"
               }`}
             >
               <Text
@@ -263,7 +263,7 @@ export default function TransactionHistory() {
                 {date}
               </Text>
 
-              <View className="bg-white/5 rounded-3xl border border-white/10 overflow-hidden">
+              <View className="bg-black/15 rounded-3xl border border-white/10 overflow-hidden">
                 {groupedTransactions[date].map(
                   (transaction: any, index: number) => {
                     const statusInfo = getStatusIcon(transaction.status);

@@ -1,13 +1,13 @@
 // components/UserListModal.tsx
-import React from "react";
 import { SafeAreaView, Text, View } from "@/components/ui";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 import {
-  ScrollView,
-  Modal,
   ActivityIndicator,
-  TouchableOpacity,
   Image,
+  Modal,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 interface ZyppUser {
@@ -49,7 +49,7 @@ export const UserListModal: React.FC<UserListModalProps> = ({
             <View className="flex-row items-center justify-between">
               <TouchableOpacity
                 onPress={onClose}
-                className="w-12 h-12 rounded-full bg-white/5 items-center justify-center"
+                className="w-12 h-12 rounded-full bg-black/15 items-center justify-center"
               >
                 <Ionicons name="close" size={24} color="white" />
               </TouchableOpacity>
@@ -65,7 +65,7 @@ export const UserListModal: React.FC<UserListModalProps> = ({
           <View className="flex-1 px-6 pt-6">
             {isScanning ? (
               <View className="flex-1 items-center justify-center">
-                <View className="w-48 h-48 bg-white/5 rounded-3xl items-center justify-center border-2 border-dashed border-primary/50 mb-6">
+                <View className="w-48 h-48 bg-black/15 rounded-3xl items-center justify-center border-2 border-dashed border-primary/50 mb-6">
                   <ActivityIndicator size="large" color="#22C55E" />
                 </View>
                 <Text className="text-white font-semibold text-xl mb-2 text-center">
@@ -90,7 +90,7 @@ export const UserListModal: React.FC<UserListModalProps> = ({
                       <TouchableOpacity
                         key={user.id}
                         onPress={() => onUserSelect(user)}
-                        className="flex-row items-center bg-white/5 rounded-2xl p-4 border border-white/10 active:bg-white/10"
+                        className="flex-row items-center bg-black/15 rounded-2xl p-4 border border-white/10 active:bg-white/10"
                       >
                         <Image
                           source={user.avatar}
