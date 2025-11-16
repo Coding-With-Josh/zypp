@@ -57,8 +57,8 @@ export default function SupportScreen() {
     {
       icon: "logo-twitter",
       title: "Twitter Support",
-      description: "@ZyppSupport",
-      onPress: () => Linking.openURL("https://twitter.com/ZyppSupport"),
+      description: "@use_zypp",
+      onPress: () => Linking.openURL("https://twitter.com/use_zypp"),
     },
   ];
 
