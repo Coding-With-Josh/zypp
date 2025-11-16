@@ -2,7 +2,9 @@
 
 ### The Internet Can Go Off. DeFi Shouldn’t.  
 
-<img width="1080" height="360" alt="image" src="https://github.com/user-attachments/assets/588669e3-e55d-4d4d-97a0-3c38361c1c14" />
+<img width="1080" height="360" alt="image" src="https://github.com/user-attachments/assets/5e93ab3f-02ed-4beb-9c31-4db10c4acb7e" />
+<img width="900" height="450" alt="image" src="https://github.com/user-attachments/assets/5c7e7c59-20f4-497b-8e10-1d23da51c269" />
+
 
 ## 📁 APK file
 Go to this drive: [Drive Link](http://drive.google.com/drive/folders/1xtkQtbHJuwHkYR41WGQCFGJz_jcwB_yR)
