@@ -9,6 +9,8 @@
 ## 📁 APK file
 Go to this drive: [Drive Link](http://drive.google.com/drive/folders/1xtkQtbHJuwHkYR41WGQCFGJz_jcwB_yR)
 
+#PITCH MATERIALS ARE STILL ON THIS DRIVE!!!
+
 or 
 
 Check the releases
